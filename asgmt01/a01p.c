@@ -9,26 +9,43 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-static char *studentName = "I. Forgot";
+static char *studentName = "Evan Miller";
 
 // report whether machine is big or small endian
 void bigOrSmallEndian()
 {
-}
+	int num = 0x01234567;
+	char* printNum = (char*) &num;
 
+	if(*printNum == 0x67)
+	{
+		printf("byte order: little-endian");
+	}
+	else
+	{
+		printf("byte order: big-endian");
+	}
+}
 // get next int (entered in hex) using scanf()
 // returns true (success) or false (failure)
 // if call succeeded, return int value via iPtr
 bool getNextHexInt(unsigned int *iPtr)
 {
-	// replace this code with the call to scanf()
 	*iPtr = 0;
-	return true;
+	if(scanf("%X", iPtr)==1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
-
 // print requested data for the given number
 void printNumberData(int i)
 {
+	
+
 }
 
 // do not change this function in any way
