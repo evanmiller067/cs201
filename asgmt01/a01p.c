@@ -44,8 +44,59 @@ bool getNextHexInt(unsigned int *iPtr)
 // print requested data for the given number
 void printNumberData(int i)
 {
-	
+	int signBit = i & 0x80000000;
+	int expBits = i & 0x7f800000;
+	int fractBits = i & 0x007fffff;
 
+	expBits = expBits >> 23;
+
+	if(signBit != 0)
+	{
+		signBit = 1;
+	}
+	printf("signBit %i, ", signBit);
+	printf("expBits %3i, ", expBits);
+	printf("fractBits 0x%08X\n", fractBits);
+
+	if(expBits == 0 && fractBits == 0)
+	{
+		if(signBit == 0)
+		{
+			printf("+zero\n");
+		}
+		else
+		{
+			printf("-zero\n");
+		}
+	}
+	else if(expBits == 0 && fractBits != 0)
+	{
+		printf("denormalized: exp = %3i\n", (1-127));
+	}
+	else if(expBits != 0 && fractBits != 255)
+	{
+		printf("normalized: exp = %3i\n", (expBits - 127));
+	}
+	else if(expBits == 255 && fractBits == 0)
+	{
+		if(signBit == 0)
+		{
+			printf("+infinity\n");
+		}
+		else
+		{
+			printf("-infinity\n");
+		}
+	}
+	else if(expBits == 255 && fractBits >= 0x00400000)
+	{
+		printf("QNaN\n");
+	}
+	else if(expBits == 255 && fractBits >= 0x00200000)
+	{
+		printf("SNaN\n");
+	}
+	printf("\n");
 }
 
 // do not change this function in any way
