@@ -7,59 +7,78 @@
 //
 // Parent process prints sum of numbers.
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <stdio.h>
+#include <unistd.h>         // for fork(), sleep(), pipe()
+#include <sys/wait.h>       // for waitpid()
+#include <sys/types.h>		// for pid_t
+static int fd[2];
 
 int main(int argc, char **argv)
 {
-	// set up pipe
-	int fd[2];
+	
+	pid_t pid;
 
-	int x, y, z;
-
-	pipe(fd);
-	int pid = fork(); // call fork()
-
-	printf("CS201 - Assignment 3 Regular - Evan Miller\n");
+	// set up pipe, with pipe error check
+	if (pipe(fd))
+	{
+		printf("Pipe error\n");
+		return -1;
+	}
+	// call fork(), with error check
+	pid = fork();
+	
+	if(pid < 0)
+	{
+		printf("fork error %d\n", pid);
+		return -1;
+	}
+	
+	//printf("CS201 - Assignment 3 Regular - Evan Miller\n");
 
 	if (pid == 0) {
 		// -- running in child process --
-		int sum = 0;
-		
-		read(fd[0], &x, sizeof(x));
-		read(fd[0], &y, sizeof(y));
-		read(fd[0], &z, sizeof(z));
+		int sum = 0;	//sum of arg values
+		int argIn = 0;	//to hold input before adding to sum, might not need
 
-		sum = (x+y+z);
-		
-		write(fd[1], &sum, sizeof(sum));
-		close(fd[0]);
-		close(fd[1]);
+		//set up pipes for Child
+		// Receive numbers from parent process via pipe
+		// one at a time, and count them.
+
+		for(int i = 1; i < argc; i++)
+		{
+			read(fd[0], &argIn, 4);
+			sum = sum+argIn;
+		}
+		close(fd[1]); //close pipe
 
 		// Return sum of numbers.
 		return sum;
 		}
 	else {
 		// -- running in parent process --
-		int sum = x+y+z;
-		x = atoi(argv[1]);
-		y = atoi(argv[2]);
-		z = atoi(argv[3]);
-
+		
+		int sum = 0;
+		int out = 0;
 		// Send numbers (datatype: int, 4 bytes) from command line arguments
 		// starting with argv[1] one at a time through pipe to child process.
-		write(fd[1], &x, sizeof(x));
-		write(fd[1], &y, sizeof(y));
-		write(fd[1], &z, sizeof(z));
-	
-		read(fd[0], &sum, sizeof(sum));
 		
-		printf("sum = %d\n", sum);
-		
-		close(fd[1]);
-		close(fd[0]);		
+		for(int i = 1; i < argc; i++)
+		{
+			out = atoi(argv[i]);
+			write(fd[1], &out, 4);
 		}
+		close(fd[1]);
 
+		// Wait for child process to return. Reap child process.
+		// Receive sum of numbers via the value returned when
+		// the child process is reaped.
+	
+		pid = wait(&sum);
+		sum = sum >> 8; //shift bits to avoid having to cast to (int)(static int)sum
+
+		printf("CS201 - Assignment 3 Regular - Evan Miller\n");	
+		printf("sum = %d\n", sum);
 		return 0;
+		}
 }
