@@ -17,7 +17,12 @@ int main (void)
     double *p; //pointer
     double rt1 = 0; //running total to be added to sum
     double rt2 = 0; //running total 2
-
+	double rt3 = 0;
+	double rt4 = 0;
+	double rt5 = 0;
+	double rt6 = 0;
+	double rt7 = 0;
+	double rt8 = 0;
     // ... and this one.
 
     // Please change 'your name' to your actual name.
@@ -25,13 +30,27 @@ int main (void)
     for (i = 0; i < N_TIMES; i++) {
 
     // You can change anything between this comment ...
-        rt1 = 0;
-        rt2 = 0;
-        for (p = array; p < &array[ARRAY_SIZE]; p += 12) {
-            rt1 += (*p) + *(p + 1) + *(p + 2) + *(p + 3) + *(p + 4) + *(p + 5);
-            rt2 += *(p + 6) + *(p + 7) + *(p + 8) + *(p + 9) + *(p + 10) + *(p + 11);
-        }
-        sum += rt1 + rt2;
+       // rt1 = 0;
+       // rt2 = 0;
+		p = array + (ARRAY_SIZE);
+			while(array < p - 25)
+			{
+            	rt1 += *p + *(p - 1) + *(p - 2) + *(p - 3);
+				rt2 += *(p - 4) + *(p - 5) + *(p - 6);
+            	rt3 += *(p - 7) + *(p - 8) + *(p - 9);
+				rt4 += *(p - 10) + *(p - 11) + *(p - 12);
+				rt5 += *(p - 13) + *(p - 14) + *(p - 15);
+				rt6 += *(p - 16) + *(p - 17) + *(p - 18);
+				rt7 += *(p - 19) + *(p - 20) + *(p - 21);
+				rt8 += *(p - 22) + *(p - 23) + *(p - 24);
+				p -= 25;
+        	}
+			if(p > array)
+			{
+				rt1 += *p;
+			}
+		
+       //  sum += (rt1 + rt2 + rt3 + rt4 + rt5);
 
     // ... and this one. But your inner loop must do the same
     // number of additions as this one does.
@@ -39,7 +58,10 @@ int main (void)
     }
 
     // You can add some final code between this comment ...
-    // ... and this one.
+    
+	sum += (rt1 + rt2 + rt3 + rt4 + rt5 + rt6 + rt7 + rt8);	
+
+	// ... and this one.
 
     return 0;
 }
