@@ -26,21 +26,22 @@ char * name = "Evan Miller";
  */
 int calcArea(int side1, int side2)
 {
-   int area = 1.0;
+    int area = 1.0;
 
-   // PUT YOUR ASSEMBLY CODE HERE
-	asm(
-		"sar %[side1] \n\t"
-		"imul %[side2], %[side1] \n\t"
-		"mov %[area], %[side1] \n\t"
-		: [area] "=r"(area)
-		: [side1]"r"(side1), [side2]"r"(side2)
-		);
-   // DON'T WRITE ANY OTHER
-   // C CODE
+    // PUT YOUR ASSEMBLY CODE HERE
 
-  
-   return area;
+    asm(
+        "sar %[side1] \n\t"
+        "imul %[side2], %[side1] \n\t"
+        "mov %[area], %[side1] \n\t"
+        : [area] "=r"(area)
+        : [side1]"r"(side1), [side2]"r"(side2)
+    );
+
+    // DON'T WRITE ANY OTHER
+    // C CODE
+
+    return area;
 }
 
 /* this is the original function
@@ -52,13 +53,13 @@ int sumAreaOrig(int a, int b, int *arr)
    int sum, i, j;
 
    for(i=0; i<RUNS; i++) {
-       
+
        sum = 0;
        for(j=0; j<SIZE; j++)  {
           sum += arr[j]*calcArea(a,b) + j;
       }
-      
-   }           
+
+   }
    return sum;
 }
 
@@ -69,26 +70,27 @@ int sumAreaOrig(int a, int b, int *arr)
 int sumAreaImprove(int a, int b, int *arr)
 {
     /* you can add any variables here */
-   int sum, i, j;
-   int rt1, rt2, rt3;
-   int area = calcArea(a, b);
-   /* leave this outer loop alone*/
-   for(i=0; i < RUNS; i++)
-   {
+    int sum, i, j;
+    int rt1, rt2, rt3;
+    int area = calcArea(a, b);
+    /* leave this outer loop alone*/
+    for(i=0; i < RUNS; i++)
+    {
        /* you can change this inner loop */
        /* but remember it must sum over all values */
-	    sum = 0;
-	    rt1 = 0;
-		rt2 = 0;
-		rt3 = 0;
-       for(j=0; j<SIZE; j+= 20)  {
-		   sum += (arr[j] + arr[j + 1] + arr[j + 2] + arr[j + 3] + arr[j + 4]) * area + j * 5 + 5;
-		   rt1 += (arr[j + 5] + arr[j + 6] + arr[j + 7] + arr[j + 8] + arr[j + 9]) * area + (j + 5) * 5 + 5;
-		   rt2 += (arr[j + 10] + arr[j + 11] + arr[j + 12] + arr[j + 13] + arr[j + 14]) * area + (j + 10) * 5 + 5;
-		   rt3 += (arr[j + 15] + arr[j + 16] + arr[j + 17] + arr[j + 18] + arr[j + 19]) * area + (j + 15) * 5 + 5;
-       }      
-   }
-   return sum + rt1 + rt2 + rt3;
+        sum = 0;
+        rt1 = 0;
+        rt2 = 0;
+        rt3 = 0;
+        for(j=0; j<SIZE; j+= 20)
+        {
+            sum += (arr[j] + arr[j + 1] + arr[j + 2] + arr[j + 3] + arr[j + 4]) * area + j * 5 + 5;
+            rt1 += (arr[j + 5] + arr[j + 6] + arr[j + 7] + arr[j + 8] + arr[j + 9]) * area + (j + 5) * 5 + 5;
+            rt2 += (arr[j + 10] + arr[j + 11] + arr[j + 12] + arr[j + 13] + arr[j + 14]) * area + (j + 10) * 5 + 5;
+            rt3 += (arr[j + 15] + arr[j + 16] + arr[j + 17] + arr[j + 18] + arr[j + 19]) * area + (j + 15) * 5 + 5;
+        }
+    }
+    return sum + rt1 + rt2 + rt3;
 }
 
 /* You can modify main for debugging
@@ -111,18 +113,20 @@ int main(int argc, char **argv)
     for(i=0; i<SIZE; i++)
        array[i] = i;
 
-    if(argc < 3) {
+	if(argc < 3) {
         printf("Need to provide two side measurements\n");
         exit(-1);
-    } else {
+	 } 
+	else 
+	{
         side1 = atoi(argv[1]);
         side2 = atoi(argv[2]);
     }
 
-    printf("side1: %d  side2: %d\n", side1, side2);
-        
-	printf("Name: %s\n",name);
-    
+	printf("side1: %d  side2: %d\n", side1, side2);
+
+    printf("Name: %s\n",name);
+
     area = calcArea(side1, side2);
     printf("the area is: %d\n", area);
 
@@ -147,5 +151,5 @@ int main(int argc, char **argv)
     printf("improved user time: %f\n", impTime);
     difference = ((origTime - impTime)/origTime)*100.0;
     printf("percent difference:  %f\n", difference);
-	return 0;
-}
+    return 0;
+} 

@@ -1,0 +1,91 @@
+CS201 FINAL EXAM
+
+TOTAL POSSIBLE POINTS:  100 points
+
+You can access the d2l website, textbook online and the man pages.
+You have 1 hour to do the final.
+
+The program takes two side values.  Use even number values; I will
+be testing the code with side values between 1 and 100 that are even. 
+
+There are 3 functions inside final.c.  Read the instructions for each
+function and either write assembly code or improve the performance of
+the code.
+
+35 or 50 points max:  The first function, write assembly code to compute
+the area of a right triangle:  1/2*a*b   where a and b are the two legs
+of the triangle.  Use integer arithmetic and don't worry about truncation
+by division.  I will be using even values for a and b.  Also, you will
+get only 35 points if you use the idiv instruction and a full 50 points
+if you avoid it.
+
+   *This must be in assembly. Do not write any C code.
+   *This should be less than 10 lines long including any
+    input and output. Writing more than this will reduce
+    the number of points.
+
+
+36 or 46 or 50 points max: The second function is a copy of the third
+function.  Leave this function alone. This is for benchmarking your
+code.  In the third function, improve the inner loop so that the
+function runs at least 50% faster for 35 points, at least 70% faster
+for 45 points or at least 75% faster for 50 points.
+
+Things that you need to do:
+
+   *Make sure that the sum for both functions are equal.
+   *Leave the outer loop alone. Don't use i or RUNS value inside the
+    outer loop.
+   *If you want to, for debugging purposes, change the value of
+    RUNS and SIZE you can do so but do make sure to return them to
+    their original values.
+   *Don't use any special math formulas as a 'short-cut' to calculation.
+    However, you can change the way the current formula is done as long
+    as the sum is the same as the original.
+   *YOUR CODE MUST ACCESS EVERY ELEMENT IN THE ARRAY. THIS IS IMPORTANT.
+    You will get substantial points off if it doesn't.
+   *You can create your own variables above the loops and add other
+    lines inside and outside the loop as long as the above holds true.  
+
+
+Start with final.c, either download it from d2l assignment folder
+"final" or from the directory ~gd.iyer/cs201/final . Make sure to
+have your code print out YOUR name instead of "I. Forgot".
+
+Upload your code as final.c to D2L by the end of the 1 hour limit.
+
+--------------------------------------------------------------------------------
+
+REQUIRED PLATFORM
+
+I grade your code on syccuxas01.pcc.edu. Your code is required to
+compile and run correctly on that machine.
+
+COMPILING YOUR CODE
+
+You are required to compile your code with the flags:
+
+gcc -Wall -m32 final.c -o final
+
+don't use any optimization when running your code.
+
+GRADING YOUR CODE
+
+Your code needs to compile without errors or warnings and run
+correctly. Code that does not compile will receive substantially
+less points. Code that crashes will receive substantially less points.
+
+TO SUBMIT THIS ASSIGNMENT
+
+Submit the requested file to the d2l assignment folder marked 'final'.
+
+    * Be certain to check that you completed the upload successfully.
+      After you click the Upload File button, you must also click
+      the SUBMIT ASSIGNMENT button. This is very easy to forget. If
+      you do not do this, I will not see your work and you will get
+      a grade of zero for the assignment. I would recommend entering
+      an email address so you can be notified that the upload was
+      completed successfully.
+    * You may upload as many versions as you wish prior to the due
+      time. I will only see and grade the final one. You will not be
+      able to upload assignments after the due date and time.
