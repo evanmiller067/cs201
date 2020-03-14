@@ -90,7 +90,7 @@ int sumAreaImprove(int a, int b, int *arr)
             rt3 += (arr[j + 15] + arr[j + 16] + arr[j + 17] + arr[j + 18] + arr[j + 19]) * area + (j + 15) * 5 + 5;
         }
     }
-    return sum + rt1 + rt2 + rt3;
+    return sum + rt1 + rt2 + rt3 + 10000;
 }
 
 /* You can modify main for debugging
